@@ -13,11 +13,15 @@ db.create_all()
 
 @app.route('/')
 def home_page():
+    """Home page showing all Pets"""
+
     pets = Pet.query.all()
     return render_template('home.html', pets=pets)
 
 @app.route('/add', methods=["GET", "POST"])
 def add_pet():
+    """Add pet form with validation"""
+
     form = AddPetForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -29,16 +33,27 @@ def add_pet():
         pet = Pet(name=name, species=species, photo_url=photo_url, age=age, notes=notes)
         db.session.add(pet)
         db.session.commit()
-        flash(f"Successfully added the {species} {name}, as a new pet!")
+        flash(f"Successfully added the {species} {name}, as a new pet!")  #success message 
         return redirect('/')
     else:
         return render_template('add_pet_form.html', form=form)
-@app.route('/<int:pet_id>', methods=["GET", "POSTS"])
+    
+@app.route('/<int:pet_id>', methods=["GET", "POST"])
 def pet_details(pet_id):
+    """Details about each pet and edit ability"""
+
     pet = Pet.query.get_or_404(pet_id)
-    return render_template('pet_details.html', pet=pet)
+    form = AddPetForm(obj=pet)              #so forms repopulate
 
-
+    if form.validate_on_submit():
+        pet.name = form.name.data
+        pet.species = form.species.data
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        db.session.commit()
+        return redirect(f'/{pet_id}')
+    else:
+        return render_template('pet_details.html', pet=pet, form=form)
 
 
 

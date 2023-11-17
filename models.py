@@ -8,6 +8,7 @@ def connect_db(app):
     db.init_app(app)
 
 class Pet(db.Model):
+    """Pet Model for PSQL"""
 
     __tablename__ = "pets"
 
