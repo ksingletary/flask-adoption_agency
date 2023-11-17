@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Add Pet{% endblock %}
+{% block content %}
+
+<body class="container min-h-screen bg-[url('')] bg-center bg-cover min-w-full">
+    <div>
+        <h1 class="text-5xl font-bold text-gray-800 leading-normal justify-center ml-3">{{pet.name}}</h1>
+        <a href="/" class="text-2xl text-gray-500 font-medium ml-5"><span>&#8701;</span>Home</a>
+        <figure class="font-mono">
+                <img src="{{pet.photo_url}}" class="ml-3 mt-5 w-80">
+                <figcaption class="text-2xl mt-3 font-semibold text-gray-800">{{pet.name}}<br></figcaption>
+                <figcaption class="text-sm ml-2 text-gray-700">Species: {{pet.species}}<br></figcaption>
+                <figcaption class="text-sm ml-2 text-gray-700">Age: {{pet.age}}<br></figcaption>
+                <figcaption class="text-sm ml-2 text-gray-700">Notes: {{pet.notes}}<br></figcaption>
+        </figure>
+    </div>
+    <div class="mt-10">
+        <form action="", method="POST">
+            <button class="bg-yellow-800 rounded-3xl py-3 px-8 font-medium 
+            hover:bg-transparent hover:border-gray-400 
+            hover:text-white-500 duration-300 hover:border border border-transparent">Edit</button>
+        </form>
+        
+    </div>
+    
+</body>
+{% endblock %}
